@@ -1,0 +1,175 @@
+﻿@page "/"
+@using MudBlazor
+
+<PageTitle>NomozVaqtlari</PageTitle>
+
+
+<div class="header">
+    <div class="date">
+        <div class="weekday">@CurrentWeekday</div>
+        <div class="day-year">@CurrentDayYear</div>
+    </div>
+    <div class="time-city">
+        <div class="city">@Location</div>
+        <div class="time">@CurrentTime</div>
+        </div>
+</div>
+
+<div style="margin-top: 12rem;"></div>
+
+@if(Latitude == "0")
+{
+    <MudChip T="string" Class="chip-style">@WarningMessage</MudChip>
+    <div style="margin-top: 0.5rem;"></div>
+}
+
+<MudGrid Spacing="@Spacing" Justify="Justify.Center">
+    @foreach (var item in Items)
+    {
+        <MudItem xs="12" sm="6" md="3" lg="3">
+            <MudCard Class="mud-card" Style="background-color: rgba(12, 3, 53, 0.831);">
+                <MudCardHeader>
+                    <MudText Typo="Typo.h6" Class="card-title">
+                        <img src="@item.ImageUrl" alt="Card Logo" class="card-logo"
+                        style="width: 24px; height: 24px; margin-right: 10px;" />
+                        @item.Title
+                    </MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.body2" Class="card-time">@item.Time</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <div style="margin-top: 0.5rem;"></div>
+    }
+    <!-- New card for countdown to next prayer -->
+    <MudItem xs="12" sm="6" md="3" lg="3">
+        <MudCard Class="mud-card" Style="white">
+            <MudCardHeader>
+                <MudText Typo="Typo.h6" Class="next-prayer-time" Style="green">
+                    @NextPrayerTitle
+                </MudText>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.body2" Class="card-next-prayer-time">@TimeLeft</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<style>
+    body {
+        background-image: url('https://cdn.pixabay.com/photo/2015/06/08/15/11/kazan-801909_1280.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        font-family: "Caveat", sans-serif;
+    }
+
+    /* Header styling */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        right: 20px;
+        width: calc(100% - 40px);
+        z-index: 10;
+    }
+
+    .date {
+        text-align: left;
+        font-family: 'Arial', 'Verdana', sans-serif;
+    }
+
+    .time-city {
+        text-align: right;
+        font-family: 'Arial', 'Verdana', sans-serif;
+    }
+
+    .weekday {
+        font-size: 16px;
+        color: rgba(16, 14, 86, 0.814);
+        font-family: 'Arial', 'Verdana', sans-serif;
+    }
+
+    .day-year {
+        font-size: 14px;
+        color:  rgba(16, 14, 86, 0.814);
+        font-family: 'Arial', 'Verdana', sans-serif;
+    }
+
+    .time {
+        font-size: 16px;
+        color:  rgba(16, 14, 86, 0.814);
+        font-family: 'Arial', 'Verdana', sans-serif;
+    }
+
+    .city {
+        font-size: 16px;
+        color:  rgba(16, 14, 86, 0.814);
+        font-family: 'Arial', 'Verdana', sans-serif;
+    }
+
+    /* Style for the card title (text) */
+    .card-title {
+        color:  rgba(255, 255, 255, 0.8);
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Style for the card time */
+    .card-time {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+        color:  rgba(255, 255, 255, 0.8);
+    }
+
+    .card-next-prayer-time {
+        text-align: right;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+        color: rgb(0, 0, 0);
+    }
+
+    .next-prayer-time {
+        color: rgb(0, 0, 0);
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Optional: Styling for card background */
+    .mud-card {
+        display: flex;
+        justify-content: space-between;
+        /* Space between the title and time */
+        align-items: center;
+        border-radius: 8px;
+        padding: 16px;
+        background-color: white;
+        opacity: 0.8;
+    }
+    .chip-style {
+    background-color: red; /* Warm orange color */
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    }
+    .chip-style:hover {
+        background-color: #FB8C00; /* Slightly darker shade on hover */
+        cursor: pointer;
+    }
+</style>
