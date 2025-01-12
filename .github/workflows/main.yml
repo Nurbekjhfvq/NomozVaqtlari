@@ -1,30 +1,30 @@
-name: Deploy NomozVaqtlari to GitHub Pages
+name: Build and Deploy NomozVaqtlari Web App
 
 on:
   push:
     branches:
-      - master  # Agar asosiy branch boshqa bo'lsa, shu yerda o'zgartiring
+      - master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    # Kodni repositordan olish
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # .NET muhitni sozlash
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '9.0'  # Sizning loyiha uchun ishlatilayotgan .NET versiyasi
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0' # Loyihangizning .NET versiyasini kiriting
 
-    # Loyihani build qilish
-    - name: Publish NomozVaqtlari Blazor WebAssembly app
-      run: dotnet publish NomozVaqtlari -c Release -o build/wwwroot
-    # GitHub Pages'ga deploy qilish
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        publish_dir: build/wwwroot
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet publish -c Release -o /publish
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /publish/wwwroot
