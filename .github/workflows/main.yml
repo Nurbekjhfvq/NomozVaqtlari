@@ -22,8 +22,7 @@ jobs:
 
     # Loyihani build qilish
     - name: Publish NomozVaqtlari Blazor WebAssembly app
-      run: dotnet publish -c Release -o build/wwwroot
-
+      run: dotnet publish NomozVaqtlari -c Release -o build/wwwroot
     # GitHub Pages'ga deploy qilish
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
