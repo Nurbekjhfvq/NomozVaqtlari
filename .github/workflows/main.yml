@@ -3,7 +3,7 @@ name: Deploy NomozVaqtlari Blazor WASM to GitHub Pages
 on:
   push:
     branches:
-      - main  # yoki sizning asosiy branch'ingiz
+      - master  # yoki sizning asosiy branch'ingiz
 
 jobs:
   build:
